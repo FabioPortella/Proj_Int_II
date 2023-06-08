@@ -29,12 +29,15 @@ public class UsuarioController : ControllerBase
         try
         {
             if(await context.Usuarios.AnyAsync()){
+                if (await context.Usuarios.AnyAsync(p => p.Email == model.Email))
+                    return BadRequest("Já existe usuário com o e-mail informado");
                 model.Ativado = true;
                 model.TipoPessoa = 1;
                 model.Senha = ObterSenha(model);
                 context.Usuarios.Add(model);
                 await context.SaveChangesAsync();
-                EnviarEmail ("cleityn@gmail.com", "String assunto", "String codigo");
+                
+                //EnviarEmail ("cleityn@gmail.com", "String assunto", "String codigo");
                 return Ok("Usuário salvo com sucesso");
             }
             else{
@@ -47,9 +50,10 @@ public class UsuarioController : ControllerBase
                 return Ok("Usuário salvo com sucesso");
             }
         }
-        catch
+        catch(Exception e)
         {
-            return BadRequest("Falha ao inserir o usuário informado");
+
+            return BadRequest("Falha ao inserir o usuário informado" + e.Message);
         }
     }
 
