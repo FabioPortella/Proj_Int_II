@@ -28,7 +28,7 @@ public class UsuarioController : ControllerBase
     {
         try
         {
-            /*if(await context.Usuarios.AnyAsync()){
+            if(await context.Usuarios.AnyAsync()){
                 model.Ativado = true;
                 model.TipoPessoa = 1;
                 model.Senha = ObterSenha(model);
@@ -39,13 +39,13 @@ public class UsuarioController : ControllerBase
             }
             else{
                 if (await context.Usuarios.AnyAsync(p => p.Email == model.Email))
-                    return BadRequest("Já existe usuário com o e-mail informado");*/
+                    return BadRequest("Já existe usuário com o e-mail informado");
 
                 model.Senha = ObterSenha(model);
                 context.Usuarios.Add(model);
                 await context.SaveChangesAsync();
                 return Ok("Usuário salvo com sucesso");
-            /*}*/
+            }
         }
         catch
         {
@@ -135,20 +135,20 @@ public class UsuarioController : ControllerBase
         return retorno;
     }
 
-    private  static Boolean EnviarEmail (String email_destino, String assunto, String codigo){
+    private  static Boolean EnviarEmail (String email_destino, String assunto, String mensagem){
 
 
 
         // Configurar as informações do e-mail
         MailMessage message = new MailMessage();
-        message.From = new MailAddress("apinext@mundotela.net");
+        message.From = new MailAddress("portskoll@gmail.com");
         message.To.Add(email_destino);
         message.Subject = assunto;
-        message.Body = "Seu código de autenticação é: " + codigo;
+        message.Body = mensagem;
 
         // Configurar o cliente SMTP e enviar o e-mail
-        SmtpClient client = new SmtpClient("smtp.hostinger.com", 465);
-        client.Credentials = new NetworkCredential("apinext@mundotela.net", "api#Next@2023");
+        SmtpClient client = new SmtpClient("smtp.gmail.com", 465);
+        client.Credentials = new NetworkCredential("portskoll@gmail.com", "jhqgnjefisfjlhff");
         client.EnableSsl = true;
         client.Send(message);
 
