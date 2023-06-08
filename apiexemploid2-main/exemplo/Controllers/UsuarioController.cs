@@ -31,13 +31,13 @@ public class UsuarioController : ControllerBase
             if(await context.Usuarios.AnyAsync()){
                 if (await context.Usuarios.AnyAsync(p => p.Email == model.Email))
                     return BadRequest("Já existe usuário com o e-mail informado");
-                model.Ativado = true;
+                model.Ativado = false;
                 model.TipoPessoa = 1;
                 model.Senha = ObterSenha(model);
                 context.Usuarios.Add(model);
                 await context.SaveChangesAsync();
                 
-                //EnviarEmail ("cleityn@gmail.com", "String assunto", "String codigo");
+                //emailAtivaUser ();
                 return Ok("Usuário salvo com sucesso");
             }
             else{
@@ -47,6 +47,7 @@ public class UsuarioController : ControllerBase
                 model.Senha = ObterSenha(model);
                 context.Usuarios.Add(model);
                 await context.SaveChangesAsync();
+                //emailAtivaUser ();
                 return Ok("Usuário salvo com sucesso");
             }
         }
@@ -138,10 +139,8 @@ public class UsuarioController : ControllerBase
 
         return retorno;
     }
-
+    [NonAction]
     private  static Boolean EnviarEmail (String email_destino, String assunto, String mensagem){
-
-
 
         // Configurar as informações do e-mail
         MailMessage message = new MailMessage();
@@ -151,16 +150,43 @@ public class UsuarioController : ControllerBase
         message.Body = mensagem;
 
         // Configurar o cliente SMTP e enviar o e-mail
-        SmtpClient client = new SmtpClient("smtp.gmail.com", 465);
-        client.Credentials = new NetworkCredential("portskoll@gmail.com", "jhqgnjefisfjlhff");
-        client.EnableSsl = true;
-        client.Send(message);
-
-
-
+        try
+            {
+                using (var client = new SmtpClient("smtp.gmail.com", 465))
+                {
+                    client.EnableSsl = true;
+                    client.Credentials = new NetworkCredential("portskoll@gmail.com", "obabwdsfolpzejew");
+                    //message = new MailMessage("apinext@mundotela.net", email, "Subject", text);
+                    client.Send(message);
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error sending email: " + e.Message);
+                return false;
+            }
+    }
+     [NonAction]
+    private  static Boolean emailUserPass(){
+        EnviarEmail ("String", "String", "assunto");
         return false;
     }
-
+     [NonAction]
+    private  static Boolean trocaEmail(){
+        EnviarEmail ("String", "String", "assunto");
+        return false;
+    }
+     [NonAction]
+    private  static Boolean emailTrocaSenha(){
+        EnviarEmail ("String", "String", "assunto");
+        return false;
+    } 
+    [NonAction]
+    private  static Boolean emailAtivaUser(){
+        EnviarEmail ("email", "assunto", "mensagem");
+        return false;
+    }
 }
 
 

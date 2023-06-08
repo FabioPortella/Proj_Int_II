@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 [Authorize]
 [ResponseCache(NoStore = true, Duration = 0, Location = ResponseCacheLocation.None)]
 [ApiController]
+
 public class NoticiaController : ControllerBase
 {
     private readonly DataContext context;
@@ -17,6 +18,7 @@ public class NoticiaController : ControllerBase
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<ActionResult> Post([FromBody] Noticia model)
     {
         try
@@ -32,6 +34,7 @@ public class NoticiaController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<IEnumerable<Noticia>>> Get()
     {
         try
@@ -45,6 +48,7 @@ public class NoticiaController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<ActionResult<Noticia>> Get([FromRoute] int id)
     {
         try
@@ -61,6 +65,7 @@ public class NoticiaController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [AllowAnonymous]
     public async Task<ActionResult> Put([FromRoute] int id, [FromBody] Noticia model)
     {
         if (id != model.Id)
@@ -82,6 +87,7 @@ public class NoticiaController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [AllowAnonymous]
     public async Task<ActionResult> Delete([FromRoute] int id)
     {
         try

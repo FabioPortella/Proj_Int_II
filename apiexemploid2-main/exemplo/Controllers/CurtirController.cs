@@ -17,6 +17,7 @@ public class CurtirController : ControllerBase
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<ActionResult> Post([FromBody] Curtir model)
     {
         try
@@ -32,6 +33,7 @@ public class CurtirController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<IEnumerable<Curtir>>> Get()
     {
         try
@@ -45,6 +47,7 @@ public class CurtirController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<ActionResult<Curtir>> Get([FromRoute] int id)
     {
         try
@@ -61,6 +64,7 @@ public class CurtirController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [AllowAnonymous]
     public async Task<ActionResult> Put([FromRoute] int id, [FromBody] Curtir model)
     {
         if (id != model.Id)
@@ -82,6 +86,7 @@ public class CurtirController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [AllowAnonymous]
     public async Task<ActionResult> Delete([FromRoute] int id)
     {
         try

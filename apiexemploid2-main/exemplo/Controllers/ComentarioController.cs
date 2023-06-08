@@ -17,6 +17,7 @@ public class ComentarioController : ControllerBase
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<ActionResult> Post([FromBody] Comentario model)
     {
         try
@@ -32,6 +33,7 @@ public class ComentarioController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<IEnumerable<Comentario>>> Get()
     {
         try
@@ -45,6 +47,7 @@ public class ComentarioController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<ActionResult<Comentario>> Get([FromRoute] int id)
     {
         try
@@ -61,6 +64,7 @@ public class ComentarioController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [AllowAnonymous]
     public async Task<ActionResult> Put([FromRoute] int id, [FromBody] Comentario model)
     {
         if (id != model.Id)
@@ -82,6 +86,7 @@ public class ComentarioController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [AllowAnonymous]
     public async Task<ActionResult> Delete([FromRoute] int id)
     {
         try
